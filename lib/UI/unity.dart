@@ -1,18 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_unity_widget/flutter_unity_widget.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class UnityScreen extends StatefulWidget {
-  UnityScreen({Key? key}) : super(key: key);
+  const UnityScreen({Key? key}) : super(key: key);
 
   @override
-  _LoaderScreenState createState() => _LoaderScreenState();
+  LoaderScreenState createState() => LoaderScreenState();
 }
 
-class _LoaderScreenState extends State<UnityScreen> {
-  UnityWidgetController? _unityWidgetController;
+class LoaderScreenState extends State<UnityScreen> {
+  UnityWidgetController? unityWidgetController;
   double _sliderValue = 0.0;
 
   @override
@@ -24,7 +22,7 @@ class _LoaderScreenState extends State<UnityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Unity'),
+        title: const Text('Unity'),
       ),
       body: Card(
         margin: const EdgeInsets.all(8),
@@ -47,25 +45,9 @@ class _LoaderScreenState extends State<UnityScreen> {
                 child: Card(
                   elevation: 10,
                   child: Column(
-                    children: <Widget>[
-                      // ElevatedButton(
-                      //   onPressed: () {
-                      //     if (MediaQuery.of(context).orientation ==
-                      //         Orientation.portrait) {
-                      //       SystemChrome.setPreferredOrientations([
-                      //         DeviceOrientation.landscapeLeft,
-                      //         DeviceOrientation.landscapeRight
-                      //       ]);
-                      //     } else if (MediaQuery.of(context).orientation ==
-                      //         Orientation.landscape) {
-                      //       SystemChrome.setPreferredOrientations(
-                      //           [DeviceOrientation.portraitUp]);
-                      //     }
-                      //   },
-                      //   child: Text("Change Orientation"),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20),
+                    children:[
+                      const Padding(
+                        padding: EdgeInsets.only(top: 20),
                         child: Text("Rotation speed:"),
                       ),
                       Slider(
@@ -91,7 +73,7 @@ class _LoaderScreenState extends State<UnityScreen> {
   }
 
   void setRotationSpeed(String speed) {
-    _unityWidgetController!.postMessage(
+    unityWidgetController!.postMessage(
       'Cube',
       'SetRotationSpeed',
       speed,
@@ -99,11 +81,11 @@ class _LoaderScreenState extends State<UnityScreen> {
   }
 
   void onUnityMessage(message) {
-    print('Received message from unity: ${message.toString()}');
+    //print('Received message from unity: ${message.toString()}');
   }
 
   // Callback that connects the created controller to the unity controller
   void onUnityCreated(controller) {
-    this._unityWidgetController = controller;
+    unityWidgetController = controller;
   }
 }
