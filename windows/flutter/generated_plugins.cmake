@@ -3,6 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus_windows
+  flutter_unity_widget
+  smart_auth
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
