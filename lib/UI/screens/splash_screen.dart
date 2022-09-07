@@ -1,10 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:rjwada/UI/authentication_page.dart';
+import 'package:rjwada/UI/pages/authentication_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../generated/assets.dart';
-import 'home_page.dart';
+import '../pages/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,10 +12,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   SharedPreferences? prefs;
-
-
 
   Future<bool> checkValidation() async {
     prefs = await SharedPreferences.getInstance();
@@ -33,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
           bool intro = snapshot.data!;
           return AnimatedSplashScreen(
             animationDuration: const Duration(milliseconds: 1),
-            backgroundColor: Color(0xff0c9bfb),
+            backgroundColor: const Color(0xff0c9bfb),
             nextScreen: intro ? const HomeScreen() : const AuthenticatonPage(),
             splash: Image.asset("assets/images/splash.jpeg"),
           );

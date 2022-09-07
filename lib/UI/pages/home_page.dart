@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rjwada/Getx/getx_controller.dart';
-import 'package:rjwada/UI/unity.dart';
+import 'package:rjwada/UI/unitygame_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -25,10 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   initializeValues() async {
     prefs = await SharedPreferences.getInstance();
-    var userName = prefs?.getString("name");
+    var user = prefs?.getString("name");
 
     setState(() {
-      userName = userName;
+      userName = user!;
     });
   }
 
@@ -47,14 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 icon: const Icon(Icons.logout))
           ],
           automaticallyImplyLeading: false,
-          title: userName == null
+          title: userName == ''
               ? const Text(
                   "Hello 👋",
                   style: TextStyle(color: Colors.black),
                 )
               : Text(
-                  'Hello 👋 $userName',
-                  style: TextStyle(color: Colors.black),
+                  'Hello, $userName 👋',
+                  style: const TextStyle(color: Colors.black),
                 )),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -62,9 +62,13 @@ class _HomeScreenState extends State<HomeScreen> {
           Obx(
             () => imageController.compressImagePath.value == ''
                 ? const Center(
-                    child: Text(
-                      'Select image from camera/galley',
-                      style: TextStyle(fontSize: 20),
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Select image from camera/galley.'
+                            ' Make Sure to upload as [jpeg, jpg,]',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                   )
                 : Center(
@@ -84,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 60,
           ),
           ElevatedButton.icon(
@@ -93,12 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(8)))),
             onPressed: () {
-
-
-
               showModalBottomSheet(
-                isDismissible: true,
-
+                  isDismissible: true,
                   context: context,
                   builder: (context) {
                     return Wrap(children: [
@@ -106,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: const Text("Camera"),
                         leading: const Icon(Icons.camera_alt_sharp),
                         onTap: () {
-
                           imageController.getImage(ImageSource.camera);
                           Get.back();
                         },

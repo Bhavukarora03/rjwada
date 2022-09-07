@@ -1,4 +1,3 @@
-
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,14 +21,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-   leading: IconButton(
+        leading: IconButton(
             onPressed: () {
               Get.back();
             },
             icon: const Icon(Icons.arrow_back_ios)),
-
-
-
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,18 +50,19 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 "$data",
                 style: const TextStyle(fontSize: 18, color: Colors.black87)),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Pinput(
                 length: 6,
                 onCompleted: (String value) {
-
-                  CoolAlert.show(context: context, type: CoolAlertType.loading, backgroundColor: Colors.black87);
+                  CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.loading,
+                      backgroundColor: Colors.black87);
                   Get.find<DataController>()
                       .verifyOtpCode(value, widget.verficationId);
                 },

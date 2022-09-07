@@ -4,7 +4,6 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:rjwada/Getx/getx_controller.dart';
 
 class AuthenticatonPage extends StatefulWidget {
@@ -66,7 +65,10 @@ class _AuthenticatonPageState extends State<AuthenticatonPage> {
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8)))),
                   onPressed: () {
-                    CoolAlert.show(context: context, type: CoolAlertType.loading,);
+                    CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.loading,
+                    );
                     Get.find<DataController>()
                         .registerUserWithPhone(phoneNumber);
                   },
