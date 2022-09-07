@@ -15,6 +15,8 @@ import 'package:rjwada/UI/home_page.dart';
 import 'package:rjwada/UI/otp_verification.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Provider/img_provider.dart';
+
 class DataController extends GetxController {
   static DataController get to => Get.find<DataController>();
 
@@ -71,13 +73,38 @@ class DataController extends GetxController {
       compressImageSize.value =
           "${((File(compressImagePath.value)).lengthSync() / 1024 / 1024).toStringAsFixed(2)} Mb";
 
-      // uploadImage(compressedFile);
+      uploadImage(compressedFile);
     } else {
       Get.snackbar('Error', 'No image selected',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white);
     }
+  }
+
+  void uploadImage(File file) {
+    Get.dialog(Center(child: CircularProgressIndicator(),),
+      barrierDismissible: false,);
+    ImageUploadProvider().uploadImage(file).then((resp) {
+      Get.back();
+      if (resp == "success") {
+        Get.snackbar('Success', 'File Uploaded',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white);
+      } else if (resp == "fail") {
+        Get.snackbar('Error', 'File upload failed',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
+      }
+    }, onError: (err) {
+      Get.back();
+      Get.snackbar('Error', 'File upload failed',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+    });
   }
 
   Future<void> registerUserWithPhone(String phone) async {
@@ -102,6 +129,7 @@ class DataController extends GetxController {
             },
             codeAutoRetrievalTimeout: (String timer) {});
   }
+
 
   Future<void> verifyOtpCode(String otpCode, String verficationId) async {
     final credential = PhoneAuthProvider.credential(
@@ -207,4 +235,7 @@ class DataController extends GetxController {
       Get.to(() => const HomeScreen());
     }
   }
+
+
 }
+

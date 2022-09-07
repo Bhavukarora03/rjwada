@@ -94,8 +94,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.all(Radius.circular(8)))),
             onPressed: () {
 
+
+
               showModalBottomSheet(
-                  isDismissible: true,
+                isDismissible: true,
+
                   context: context,
                   builder: (context) {
                     return Wrap(children: [
@@ -103,7 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         title: const Text("Camera"),
                         leading: const Icon(Icons.camera_alt_sharp),
                         onTap: () {
+
                           imageController.getImage(ImageSource.camera);
+                          Get.back();
                         },
                       ),
                       ListTile(
@@ -111,6 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         leading: const Icon(Icons.photo),
                         onTap: () {
                           imageController.getImage(ImageSource.gallery);
+                          Get.back();
                         },
                       ),
                     ]);
